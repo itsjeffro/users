@@ -30,21 +30,36 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @ORM\Column(name="last_login", type="datetime", nullable=true)
+     */
+    private $lastLogin;
+
+    /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     * @return User
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -74,6 +89,10 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     * @return User
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -89,6 +108,10 @@ class User implements UserInterface
         return (string) $this->password;
     }
 
+    /**
+     * @param string $password
+     * @return User
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -111,5 +134,26 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @param \DateTime $dateTime
+     * @return User
+     */
+    public function setLastLogin(\DateTime $dateTime): self
+    {
+        $this->lastLogin = $dateTime;
+
+        return $this;
+    }
+
+    /**
+     * Return user's last login dateTime.
+     *
+     * @return \DateTime
+     */
+    public function getLastLogin(): \DateTime
+    {
+        return $this->lastLogin;
     }
 }
